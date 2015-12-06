@@ -44,14 +44,14 @@ func DrawTerminalf(w io.Writer, f DrawTextFormatFunc) DrawFunc {
 		line := f(progress, total)
 		if len(line) < maxLength {
 			line = fmt.Sprintf(
-				"%s%s%s",
+				"%s%s",
 				line,
-				strings.Repeat(" ", maxLength-len(line)),
-				DrawTextFormatBytes(progress, total))
+				strings.Repeat(" ", maxLength-len(line)))
 		}
 		maxLength = len(line)
 
-		_, err := fmt.Fprint(w, line+"\r")
+		size := DrawTextFormatBytes(progress, total)
+		_, err := fmt.Fprint(w, line+size+"\r")
 		return err
 	}
 }
